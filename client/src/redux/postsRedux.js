@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_URL } from '../config';
 // action name creator
 const reducerName = 'posts';
 const createActionName = name => `app/${reducerName}/${name}`;
@@ -30,7 +31,7 @@ export default function reducer(statePart = initialState, action = {}) {
 
 export const loadPostsRequest = () => {
   return dispatch => {
-    axios.get('http://localhost:8000/api/posts').then(res => {
+    axios.get(`${API_URL}/posts`).then(res => {
       dispatch(loadPosts(res.data));
     })
     .catch(err => {
