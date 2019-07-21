@@ -1,12 +1,12 @@
 import React from 'react';
 import PageTitle from '../../common/PageTitle/PageTitle';
-import PostsCounter from '../../features/PostsCounter/PostsCounter';
+import PostsCounterContainer from '../../features/PostsCounter/PostsCounterContainer';
 import PostsContainer from '../../features/Posts/PostsContainer';
 
 const PostsPage = () => (
   <div>
     <PageTitle>Posts list</PageTitle>
-    <PostsCounter />
+    <PostsCounterContainer />
     <PostsContainer />
   </div>
 );

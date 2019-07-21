@@ -6,7 +6,8 @@ const createActionName = name => `app/${reducerName}/${name}`;
 
 /* SELECTORS */
 
-export const getPosts = ({posts}) => posts;
+export const getPosts = ({ posts }) => posts;
+export const getPostsCount = ({ posts }) => posts.length;
 
 /* ACTIONS */
 export const LOAD_POSTS = createActionName('LOAD_POSTS');
@@ -30,12 +31,14 @@ export default function reducer(statePart = initialState, action = {}) {
 /* THUNKS */
 
 export const loadPostsRequest = () => {
-  return dispatch => {
-    axios.get(`${API_URL}/posts`).then(res => {
+  return async dispatch => {
+    try {
+
+      let res = await axios.get(`${API_URL}/posts`);
       dispatch(loadPosts(res.data));
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 };
