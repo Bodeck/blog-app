@@ -2,6 +2,7 @@ const config = require('./config');
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const loadTestData = require('./testData');
 
 const app = express();
 
@@ -16,7 +17,10 @@ app.use('/api', postRoutes);
 // connect to database
 mongoose.connect(config.DB, { useNewUrlParser: true });
 let db = mongoose.connection;
-db.once('open', () => console.log('Connected to database'));
+db.once('open', () => {
+  console.log('Connected to database');
+  loadTestData();
+});
 db.on('error', (err) => console.log(`Error ${err}`));
 
 app.listen(config.PORT, () => {
