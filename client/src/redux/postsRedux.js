@@ -8,17 +8,20 @@ const createActionName = name => `app/${reducerName}/${name}`;
 export const getPosts = ({ posts }) => posts.data;
 export const getPostsCount = ({ posts }) => posts.data.length;
 export const getRequest = ({ posts }) => posts.request;
+export const getSinglePost = ({ posts }) => posts.singlePost;
 
 /* ACTIONS */
 export const LOAD_POSTS = createActionName('LOAD_POSTS');
 export const START_REQUEST = createActionName('START_REQUEST');
 export const END_REQUEST = createActionName('END_REQUEST');
 export const ERROR_REQUEST = createActionName('ERROR_REQUEST');
+export const GET_POST = createActionName('GET_POST');
 
 export const loadPosts = payload => ({ payload, type: LOAD_POSTS });
 export const startRequest = () => ({ type: START_REQUEST });
 export const endRequest = () => ({ type: END_REQUEST });
 export const errorRequest = error => ({ error, type: ERROR_REQUEST });
+export const getPost = post => ({ post, type: GET_POST });
 
 /* INITIAL STATE */
 const initialState = {
@@ -28,6 +31,7 @@ const initialState = {
     error: null,
     success: null,
   },
+  singlePost: {},
 };
 
 /* REDUCERS */
@@ -42,6 +46,8 @@ export default function reducer(statePart = initialState, action = {}) {
       return { ...statePart, request: { pending: false, error: null, success: true } };
     case ERROR_REQUEST:
       return { ...statePart, request: { pending: false, error: action.error, success: false } }
+    case GET_POST:
+      return { ...statePart, singlePost: action.post }
     default:
       return statePart;
   }
@@ -62,6 +68,22 @@ export const loadPostsRequest = () => {
 
     } catch (error) {
       console.log(error.message);
+      dispatch(errorRequest(error.message));
+    }
+  };
+};
+
+export const getPostRequest = (postId) => {
+  return async dispatch => {
+
+    dispatch(startRequest());
+    try {
+
+      let res = await axios.get(`${API_URL}/posts/${postId}`);
+      dispatch(getPost(res.data));
+      dispatch(endRequest());
+    } catch (error) {
+
       dispatch(errorRequest(error.message));
     }
   };
