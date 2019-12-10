@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import PageTitle from '../../common/PageTitle/PageTitle';
 import Spinner from '../../common/Spinner/Spinner';
 import Alert from '../../common/Alert/Alert';
@@ -18,6 +18,7 @@ class SinglePost extends Component {
       return (
         <article>
           <PageTitle>{post.title}</PageTitle>
+          <p>Author: {post.author}</p>
           <HtmlBox>{post.content}</HtmlBox>
         </article>
       )
@@ -27,6 +28,17 @@ class SinglePost extends Component {
       return (<Alert variant="error">{request.error}</Alert>)
     }
   }
+}
+
+SinglePost.propTypes = {
+  post: PropTypes.shape(
+    {
+      id: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+    }
+  )
 }
 
 export default SinglePost;
