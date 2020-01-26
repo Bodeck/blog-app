@@ -11,6 +11,11 @@ class SinglePost extends Component {
     getPost(postId);
   }
 
+  componentWillUnmount() {
+    const { resetRequest } = this.props;
+    resetRequest();
+  }
+
   render() {
     const { post, request } = this.props;
 

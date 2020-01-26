@@ -4,8 +4,8 @@ import NavBar from '../../features/NavBar/NavBar';
 
 const MainLayout = ({ children }) => (
   <div>
+    <NavBar />
     <PageContainer>
-      <NavBar />
       {children}
     </PageContainer>
   </div>
