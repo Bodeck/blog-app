@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getPosts, getRequest ,loadPostsRequest, getPostsCount } from '../../../redux/postsRedux';
+import { getPosts, getRequest ,loadPostsRequest, getPostsCount, resetRequest } from '../../../redux/postsRedux';
 import Posts from './Posts';
 
 const mapStateToProps = state => ({
@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadPosts: () => dispatch(loadPostsRequest()),
+  resetRequest: () => dispatch(resetRequest()),
 })
 
 export default connect(

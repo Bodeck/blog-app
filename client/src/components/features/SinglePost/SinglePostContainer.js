@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getPostRequest, getRequest, getSinglePost } from '../../../redux/postsRedux';
+import { getPostRequest, getRequest, getSinglePost, resetRequest } from '../../../redux/postsRedux';
 import SinglePost from './SinglePost';
 
 export const SinglePostContainer = ({ postId }) => (
@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getPost: (postId) => dispatch(getPostRequest(postId)),
+  resetRequest: () => dispatch(resetRequest()),
 });
 
 export default connect(

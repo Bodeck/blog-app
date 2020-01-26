@@ -16,12 +16,14 @@ export const START_REQUEST = createActionName('START_REQUEST');
 export const END_REQUEST = createActionName('END_REQUEST');
 export const ERROR_REQUEST = createActionName('ERROR_REQUEST');
 export const GET_POST = createActionName('GET_POST');
+export const RESET_REQUEST = createActionName('RESET_REQUEST');
 
 export const loadPosts = payload => ({ payload, type: LOAD_POSTS });
 export const startRequest = () => ({ type: START_REQUEST });
 export const endRequest = () => ({ type: END_REQUEST });
 export const errorRequest = error => ({ error, type: ERROR_REQUEST });
 export const getPost = post => ({ post, type: GET_POST });
+export const resetRequest = () => ({ type: RESET_REQUEST });
 
 /* INITIAL STATE */
 const initialState = {
@@ -45,9 +47,11 @@ export default function reducer(statePart = initialState, action = {}) {
     case END_REQUEST:
       return { ...statePart, request: { pending: false, error: null, success: true } };
     case ERROR_REQUEST:
-      return { ...statePart, request: { pending: false, error: action.error, success: false } }
+      return { ...statePart, request: { pending: false, error: action.error, success: false } };
     case GET_POST:
-      return { ...statePart, singlePost: action.post }
+      return { ...statePart, singlePost: action.post };
+    case RESET_REQUEST:
+      return { ...statePart, request: { pending: false, error: null, success: null } };
     default:
       return statePart;
   }

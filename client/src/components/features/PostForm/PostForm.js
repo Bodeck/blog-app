@@ -1,6 +1,5 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-// import { connect } from 'react-redux';
 // import components
 import TextField from '../../common/TextField/TextField';
 import SectionTitle from '../../common/SectionTitle/SectionTitle';
@@ -21,6 +20,11 @@ class PostForm extends React.Component {
       author: '',
       content: '',
     }
+  }
+
+  componentDidMount() {
+    const { resetRequest } = this.props;
+    resetRequest();
   }
 
   handleChange = (e) => {
