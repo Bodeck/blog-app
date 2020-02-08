@@ -23,20 +23,20 @@ class Posts extends React.Component {
   }
 
   render() {
-    const { posts, request, postsCount, pages } = this.props;
+    const { posts, request, postsCount, pages, presentPage } = this.props;
     const { loadPostsPage } = this;
+    console.log(presentPage);
     if (!request.pending && request.success && postsCount > 0) {
       return (
         <div>
           <PostsList posts={posts} />
-          <Pagination pages={pages} onPageChange={loadPostsPage} hidden={false}/>
+          <Pagination pages={pages} onPageChange={loadPostsPage} initialPage={presentPage}/>
         </div>
       )
     } else if (request.pending || request.success === null) {
       return (
         <div>
           <Spinner />
-          <Pagination pages={pages} onPageChange={loadPostsPage} hidden={true}/>
         </div>
       )
     } else if (!request.pending && request.error) {
@@ -59,8 +59,8 @@ Posts.propTypes = {
   request: PropTypes.object.isRequired,
   loadPostsByPage: PropTypes.func.isRequired,
   resetRequest: PropTypes.func,
-  pages: PropTypes.number
-
+  pages: PropTypes.number,
+  presentPage: PropTypes.number,
 }
 
 export default Posts;

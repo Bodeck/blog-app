@@ -10,6 +10,7 @@ export const getPostsCount = ({ posts }) => posts.data.length;
 export const getRequest = ({ posts }) => posts.request;
 export const getSinglePost = ({ posts }) => posts.singlePost;
 export const getPages = ({ posts }) => Math.ceil(posts.amount / posts.postsPerPage);
+export const getPresentPage = ({ posts }) => posts.presentPage;
 
 /* ACTIONS */
 export const LOAD_POSTS = createActionName('LOAD_POSTS');
@@ -85,7 +86,6 @@ export const loadPostsRequest = () => {
       dispatch(endRequest());
 
     } catch (error) {
-      console.log(error.message);
       dispatch(errorRequest(error.message));
     }
   };
@@ -138,7 +138,6 @@ export const loadPostsByPageRequest = (page) => {
         postsPerPage,
         presentPage: page,
       };
-
       dispatch(loadPostsByPage(payload));
       dispatch(endRequest());
 
