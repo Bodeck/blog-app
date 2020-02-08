@@ -8,8 +8,8 @@ import Pagination from '../../common/Pagination/Pagination';
 class Posts extends React.Component {
 
   componentDidMount() {
-    const { loadPosts } = this.props;
-    loadPosts();
+    const { loadPostsByPage } = this.props;
+    loadPostsByPage(1);
   }
 
   componentWillUnmount() {
@@ -17,18 +17,28 @@ class Posts extends React.Component {
     resetRequest();
   }
 
-  render() {
-    const { posts, request, postsCount } = this.props;
+  loadPostsPage = (page) => {
+    const { loadPostsByPage } = this.props;
+    loadPostsByPage(page);
+  }
 
+  render() {
+    const { posts, request, postsCount, pages } = this.props;
+    const { loadPostsPage } = this;
     if (!request.pending && request.success && postsCount > 0) {
       return (
         <div>
           <PostsList posts={posts} />
-          <Pagination pages={10} onPageChange={(page) => { console.log(page) }} />
+          <Pagination pages={pages} onPageChange={loadPostsPage} hidden={false}/>
         </div>
       )
     } else if (request.pending || request.success === null) {
-      return <Spinner />
+      return (
+        <div>
+          <Spinner />
+          <Pagination pages={pages} onPageChange={loadPostsPage} hidden={true}/>
+        </div>
+      )
     } else if (!request.pending && request.error) {
       return (<Alert variant="error">{request.error}</Alert>)
     } else if (!request.pending && request.succes && posts.length === 0) {
@@ -47,7 +57,10 @@ Posts.propTypes = {
     })
   ),
   request: PropTypes.object.isRequired,
-  loadPosts: PropTypes.func.isRequired,
+  loadPostsByPage: PropTypes.func.isRequired,
+  resetRequest: PropTypes.func,
+  pages: PropTypes.number
+
 }
 
 export default Posts;
