@@ -11,6 +11,7 @@ export const getRequest = ({ posts }) => posts.request;
 export const getSinglePost = ({ posts }) => posts.singlePost;
 export const getPages = ({ posts }) => Math.ceil(posts.amount / posts.postsPerPage);
 export const getPresentPage = ({ posts }) => posts.presentPage;
+export const getPostsPerPage = ({ posts }) => posts.postsPerPage;
 
 /* ACTIONS */
 export const LOAD_POSTS = createActionName('LOAD_POSTS');
@@ -62,7 +63,7 @@ export default function reducer(statePart = initialState, action = {}) {
     case LOAD_POSTS_PAGE:
       return {
         ...statePart,
-        postPerPage: action.payload.postPerPage,
+        postsPerPage: action.payload.postsPerPage,
         presentPage: action.payload.presentPage,
         amount: action.payload.amount,
         data: [...action.payload.posts],
@@ -120,12 +121,11 @@ export const addPostRequest = (post) => {
   };
 };
 
-export const loadPostsByPageRequest = (page) => {
+export const loadPostsByPageRequest = (page, postsPerPage) => {
   return async dispatch => {
     dispatch(startRequest());
 
     try {
-      const postsPerPage = 5;
       const startAt = (page - 1) * postsPerPage;
       const limit = postsPerPage;
 
