@@ -8,7 +8,7 @@ import Pagination from '../../common/Pagination/Pagination';
 class Posts extends React.Component {
 
   state = {
-    postsPerPage: this.props.postsPerPage || 10,
+    postsPerPage: this.props.postsPerPage || 5,
   }
 
   componentDidMount() {
@@ -23,7 +23,7 @@ class Posts extends React.Component {
     const { resetRequest } = this.props;
     resetRequest();
   }
-
+  
   loadPostsPage = (page) => {
     const { loadPostsByPage } = this.props;
     const { postsPerPage } = this.state;
@@ -33,7 +33,7 @@ class Posts extends React.Component {
   render() {
     const { posts, request, postsCount, pages, presentPage } = this.props;
     const { loadPostsPage } = this;
-    const pagination = this.props.pagination | true;
+    const pagination = this.props.pagination === undefined ? true : false;
 
     if (!request.pending && request.success && postsCount > 0) {
       return (

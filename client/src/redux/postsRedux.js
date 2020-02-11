@@ -11,7 +11,6 @@ export const getRequest = ({ posts }) => posts.request;
 export const getSinglePost = ({ posts }) => posts.singlePost;
 export const getPages = ({ posts }) => Math.ceil(posts.amount / posts.postsPerPage);
 export const getPresentPage = ({ posts }) => posts.presentPage;
-export const getPostsPerPage = ({ posts }) => posts.postsPerPage;
 
 /* ACTIONS */
 export const LOAD_POSTS = createActionName('LOAD_POSTS');
@@ -40,7 +39,6 @@ const initialState = {
   },
   singlePost: {},
   amount: 0,
-  postsPerPage: 5,
   presentPage: 1
 };
 
