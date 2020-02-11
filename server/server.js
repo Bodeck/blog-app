@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const loadTestData = require('./testData');
 const helmet = require('helmet');
+const path = require('path');
 
 const app = express();
 
@@ -15,6 +16,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/api', postRoutes);
 app.use(helmet());
+app.use(express.static(path.join(__dirname,'/../client/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/../client/build/index.html'));
+});
+
 
 // connect to database
 mongoose.connect(config.DB, { useNewUrlParser: true });
