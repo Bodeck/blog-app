@@ -1,8 +1,11 @@
 import React from 'react';
+import Posts from '../../features/Posts/PostsContainer';
+import PageTitle from '../../common/PageTitle/PageTitle';
 
 const HomePage = () => (
   <div>
-    <h1>Home</h1>
+    <PageTitle>Newest Posts</PageTitle>
+    <Posts pagination={false} postsPerPage={3} />
   </div>
 );
 
