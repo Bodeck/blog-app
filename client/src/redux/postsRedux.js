@@ -111,7 +111,6 @@ export const addPostRequest = (post) => {
     dispatch(startRequest());
     try {
       await axios.post(`${API_URL}/posts`, post);
-      await new Promise((resolve, reject) => setTimeout(resolve, 2000));
       dispatch(endRequest());
     } catch (e) {
       dispatch(errorRequest(e.message));
@@ -128,7 +127,6 @@ export const loadPostsByPageRequest = (page, postsPerPage) => {
       const limit = postsPerPage;
 
       let res = await axios.get(`${API_URL}/posts/range/${startAt}/${limit}`);
-      await new Promise((resolve, reject) => setTimeout(resolve, 200));
 
       const payload = {
         posts: res.data.posts,
@@ -144,3 +142,26 @@ export const loadPostsByPageRequest = (page, postsPerPage) => {
     }
   }
 };
+
+export const updatePostRequest = (post, postId) => {
+  return async dispatch => {
+    dispatch(startRequest());
+    try {
+      await axios.put(`${API_URL}/posts/${postId}`, post)
+    } catch (err) {
+      dispatch(errorRequest(err.message));
+    }
+  }
+}
+
+export const deletePostByIdRequest = (postId) => {
+  return async dispatch => {
+    dispatch(startRequest());
+    try {
+      await axios.delete(`${API_URL}/posts/${postId}`);
+      dispatch(endRequest());
+    } catch (err) {
+      dispatch(errorRequest(err.message));
+    }
+  }
+}

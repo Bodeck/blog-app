@@ -21,11 +21,20 @@ class PostForm extends React.Component {
       content: '',
     }
   }
-
+  
   componentDidMount() {
-    const { resetRequest } = this.props;
-    resetRequest();
+    const { resetRequest, mode, getPost, postId } = this.props;
+    if (mode === "edit") {
+      getPost(postId);
+    } else {
+      resetRequest();
+    }
   }
+  // componentWillReceiveProps() {
+  //   const { post } = this.state;
+  //   const { title, author, content } = this.props.post;
+  //   this.setState({ post: { ...post, title, author, content } });
+  // }
 
   handleChange = (e) => {
     const { post } = this.state;
@@ -37,23 +46,27 @@ class PostForm extends React.Component {
     this.setState({ post: { ...post, content: text } });
   }
 
-  addPost = (e) => {
-    const { addPost } = this.props;
+  handleSubmit = (e) => {
+    const { updatePost, addPost, mode } = this.props;
     const { post } = this.state;
     e.preventDefault();
-    addPost(post);
+    if (mode === "edit") {
+      updatePost(post);
+    } else {
+      addPost(post);
+    }
   }
 
   render() {
     const { post } = this.state;
-    const { handleChange, handleEditor, addPost } = this;
-    const { request } = this.props;
+    const { handleChange, handleEditor, handleSubmit } = this;
+    const { request, mode } = this.props;
 
     if (request.error) return <Alert variant="error">{request.error}</Alert>
-    else if (request.success) return <Alert variant="success">Post has been added successfully!</Alert>
+    else if (request.success && mode !== "edit") return <Alert variant="success">Post has been added successfully!</Alert>
     else if (request.pending) return <Spinner />
     else return (
-      <form onSubmit={addPost}>
+      <form onSubmit={handleSubmit}>
         <TextField
           label="Title:"
           value={post.title}
@@ -75,7 +88,7 @@ class PostForm extends React.Component {
           options={{ placeholder: false, toolbar: { buttons: ['bold', 'underline', 'italic', 'anchor', 'h2', 'h3', 'quote'] } }}
           onChange={handleEditor}
         />
-        <Button variant="primary">Add post</Button>
+        <Button variant="primary">{mode === "edit" ? "Update post" : "Add post"}</Button>
 
       </form>
     );
@@ -85,6 +98,11 @@ class PostForm extends React.Component {
 PostForm.propTypes = {
   request: PropTypes.object.isRequired,
   addPost: PropTypes.func.isRequired,
+  updatePost: PropTypes.func.isRequired,
+  getPost: PropTypes.func,
+  postId: PropTypes.string.isRequired,
+  mode: PropTypes.string,
+  post: PropTypes.object,
 };
 
 export default PostForm;
