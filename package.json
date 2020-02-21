@@ -8,8 +8,8 @@
     "start:server": "cd server && yarn start",
     "start:client": "cd client && yarn start",
     "postinstall": "run-p install:*",
-    "install:client": "cd client && npm install",
-    "install:sever": "cd server && npm install",
+    "install:client": "cd client && yarn install",
+    "install:sever": "cd server && yarn install",
     "build": "cd client && yarn build"
   },
   "dependencies": {
