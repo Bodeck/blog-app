@@ -148,6 +148,7 @@ export const updatePostRequest = (post, postId) => {
     dispatch(startRequest());
     try {
       await axios.put(`${API_URL}/posts/${postId}`, post)
+      dispatch(endRequest());
     } catch (err) {
       dispatch(errorRequest(err.message));
     }

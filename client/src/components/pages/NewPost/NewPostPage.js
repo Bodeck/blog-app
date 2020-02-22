@@ -5,7 +5,7 @@ import PageTitle from '../../common/PageTitle/PageTitle';
 const NewPostPage = () => (
   <div>
     <PageTitle>New post</PageTitle>
-    <PostForm />
+    <PostForm mode="add" />
   </div>
 );
 
