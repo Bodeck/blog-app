@@ -2,11 +2,11 @@ import React from 'react';
 import PostForm from '../../features/PostForm/PostFormContainer';
 import PageTitle from '../../common/PageTitle/PageTitle';
 
-const NewPostPage = () => (
+const EditPostPage = ({ match }) => (
   <div>
-    <PageTitle>New post</PageTitle>
-    <PostForm mode="add" />
+    <PageTitle>Edit Post</PageTitle>
+    <PostForm mode={"edit"} postId={match.params.id} />
   </div>
 );
 
-export default NewPostPage;
+export default EditPostPage;

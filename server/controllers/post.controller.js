@@ -13,7 +13,7 @@ exports.getPosts = async (req, res) => {
 }
 // get single post by id
 exports.getPostById = async (req, res) => {
-  
+
   try {
     res.status(200).json(await Post.findOne({ id: req.params.id }));
   } catch (err) {
@@ -24,7 +24,7 @@ exports.getPostById = async (req, res) => {
 exports.addPost = async (req, res) => {
 
   try {
-    const { title, author, content} = req.body;
+    const { title, author, content } = req.body;
     let newPost = new Post();
     newPost.title = title;
     newPost.author = author;
@@ -34,16 +34,16 @@ exports.addPost = async (req, res) => {
     postSaved = await newPost.save();
     res.status(200).json(postSaved);
 
-  } catch(err) {
+  } catch (err) {
     res.status(500).json(err);
   }
 }
 
 // get post by range
 exports.getPostsByRange = async (req, res) => {
-  
+
   try {
-    let {startAt, limit} = req.params;
+    let { startAt, limit } = req.params;
     startAt = parseInt(startAt);
     limit = parseInt(limit);
 
@@ -55,8 +55,36 @@ exports.getPostsByRange = async (req, res) => {
       amount,
     });
 
-  } catch(err) {
+  } catch (err) {
     res.status(500).json(err);
   }
 
 };
+
+// remove post by id
+exports.deletePostById = async (req, res) => {
+
+  try {
+    const postId = req.params.id;
+    res.status(200).json(await Post.findOneAndDelete({ id: postId }));
+
+  } catch (err) {
+    res.status(500).json(err);
+
+  }
+}
+
+// update existing post
+exports.updatePost = async (req, res) => {
+
+  try {
+    const postId = req.params.id;
+    const { author, content, title } = req.body;
+    const update = await Post.updateOne({ id: postId }, { title, author, content });
+
+    res.status(200).json(update);
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}

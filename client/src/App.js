@@ -5,8 +5,9 @@ import HomePage from './components/pages/Home/HomePage';
 import PostsPage from './components/pages/Posts/PostsPage';
 import ContactPage from './components/pages/Contact/ContactPage';
 import NotFoundPage from './components/pages/NotFound/NotFoundPage';
-import SinglePostPage from  './components/pages/SinglePost/SinglePostPage';
-import NewPostPage from  './components/pages/NewPost/NewPostPage';
+import SinglePostPage from './components/pages/SinglePost/SinglePostPage';
+import NewPostPage from './components/pages/NewPost/NewPostPage';
+import EditPostPage from './components/pages/EditPost/EditPostPage';
 
 class App extends Component {
   render() {
@@ -15,8 +16,9 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/posts" exact component={PostsPage} />
-          <Route path="/contact" exact component={ContactPage}/>
+          <Route path="/contact" exact component={ContactPage} />
           <Route path="/posts/new" exact component={NewPostPage} />
+          <Route path="/posts/:id/edit" exact component={EditPostPage} />
           <Route path="/posts/:id" exact component={SinglePostPage} />
           <Route component={NotFoundPage} />
         </Switch>

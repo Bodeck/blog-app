@@ -38,12 +38,13 @@ class SinglePost extends Component {
 SinglePost.propTypes = {
   post: PropTypes.shape(
     {
-      id: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
+      id: PropTypes.string,
+      content: PropTypes.string,
+      title: PropTypes.string,
+      author: PropTypes.string,
     }
-  )
+  ),
+  postId: PropTypes.string.isRequired,
 }
 
 export default SinglePost;
